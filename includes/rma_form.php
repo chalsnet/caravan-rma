@@ -4,17 +4,9 @@ $featured_image = get_the_post_thumbnail_url( get_the_ID(), 'thumbnail' );
 
 if ($_POST) {
 
-	echo "<pre>";
-	print_r($_POST);
-	echo "</pre>";
-
 	$new_rma = str_split(substr(time(), 4), 3);
 	$rma_num = $new_rma[0] . "-" . $new_rma[1];
 	$uid = get_current_user_id();
-
-	print_r($new_rma);
-	print_r("<br>");
-	print_r($_SERVER['REMOTE_ADDR']);
 
 	global $wpdb;
 	$rma_table = $wpdb->prefix . "rma_request";

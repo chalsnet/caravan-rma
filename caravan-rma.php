@@ -23,7 +23,30 @@ function checkTable() {
 	global $wpdb;
 	
 	$rma_table = $wpdb->prefix . "rma_request";
-	$sql = "CREATE TABLE IF NOT EXISTS $rma_table ( ID int(10) NOT NULL AUTO_INCREMENT, uid varchar(255) NOT NULL, RMA_num int(10) NOT NULL, RMA_reason varchar(255) NOT NULL, RMA_details text NOT NULL, status varchar(10) NOT NULL DEFAULT 'Pending', date datetime NOT NULL DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY (ID) ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1";
+	$sql = "
+		CREATE TABLE IF NOT EXISTS `wp_rma_request` (
+		  `ID` int(10) NOT NULL AUTO_INCREMENT,
+		  `rma_num` varchar(10) NOT NULL,
+		  `status` varchar(10) DEFAULT 'Pending',
+		  `uid` int(10) NOT NULL,
+		  `submit_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+		  `submitter_ip` varchar(16) DEFAULT NULL,
+		  `name` varchar(100) NOT NULL,
+		  `email` varchar(100) NOT NULL,
+		  `phone` varchar(20) NOT NULL,
+		  `addr1` varchar(100) NOT NULL,
+		  `addr2` varchar(100) DEFAULT NULL,
+		  `city` varchar(100) NOT NULL,
+		  `state` varchar(10) NOT NULL,
+		  `zip` varchar(10) DEFAULT NULL,
+		  `country` varchar(50) DEFAULT NULL,
+		  `desc_issue` text NOT NULL,
+		  `attachment_1` varchar(255) DEFAULT NULL,
+		  `attachment_2` varchar(255) DEFAULT NULL,
+		  `last_update` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+		  PRIMARY KEY (`ID`)
+		) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1
+	";
 	maybe_create_table($rma_table, $sql);
 }
 register_activation_hook( __FILE__, 'checkTable' );

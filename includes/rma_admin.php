@@ -4,7 +4,7 @@
 
 	$rma_table = $wpdb->prefix . "rma_request";
 	$rma_result = $wpdb->get_results( "SELECT * FROM $rma_table ORDER BY ID DESC LIMIT 10;" );
-	
+
 ?>
 
 <style type="text/css">
@@ -37,21 +37,21 @@
 		<li>ID</li>
 		<li>User ID</li>
 		<li>RMA Number</li>
-		<li>RMA Reason</li>
+		<li>Name</li>
 		<li>RMA Detail</li>
 		<li>Status</li>
-		<li>Requested Date</li>
+		<li>Submit Date</li>
 	</ul>
 
 	<?php foreach ($rma_result as $rma_key => $rma_value) { ?>
 	<ul>
 		<li><?=$rma_value->ID?></li>
 		<li><?=$rma_value->uid?></li>
-		<li><?=$rma_value->RMA_num?></li>
-		<li><?=$rma_value->RMA_reason?></li>
-		<li><?=$rma_value->RMA_details?></li>
+		<li><?=$rma_value->rma_num?></li>
+		<li><?=$rma_value->name?></li>
+		<li><?=$rma_value->desc_issue?></li>
 		<li><a href="<?php get_permalink() . "&id=" . $rma_value->ID; ?>"><?=$rma_value->status?></a>&nbsp;</li>
-		<li><?=$rma_value->date?></li>
+		<li><?=$rma_value->submit_date?></li>
 	</ul>
 	<?php } ?>
 
