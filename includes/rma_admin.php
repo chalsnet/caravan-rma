@@ -1,16 +1,9 @@
-<?php
-
-	global $wpdb;
-
-	$rma_table = $wpdb->prefix . "rma_request";
-	$rma_result = $wpdb->get_results( "SELECT * FROM $rma_table ORDER BY ID DESC LIMIT 10;" );
-
-?>
-
 <style type="text/css">
 
 	.rma_admin {
 		width: 98%;
+		font-size: 15px;
+    	font-family: "Open Sans", "Helvetica Neue", sans-serif;
 	}
 	.rma_admin ul {
 		margin: 0;
@@ -33,26 +26,39 @@
 
 <h1>RMA Tool</h1>
 <div class="rma_admin">
+
+<?php
+
+	global $wpdb;
+	$rma_table = $wpdb->prefix . "rma_request";
+
+	if (!$_GET['rma_num']) :
+		$rma_result = $wpdb->get_results( "SELECT * FROM $rma_table ORDER BY ID DESC LIMIT 10;" );
+	else:
+		$rma_result = $wpdb->get_results( "SELECT * FROM $rma_table WHERE rma_num = '$_GET[rma_num]';" );
+	endif;
+
+	$rma_res = json_encode($rma_result[0]);
+
+// echo "<pre>";
+// print_r($rma_res);
+// echo "</pre>";
+
+?>
+	<script type="text/javascript">
+		var obj = JSON.parse(JSON.stringify(' <?=$rma_res?> '));
+		var parsedObj = JSON.parse(obj);
+		console.log(parsedObj);
+	</script>
+
 	<ul class="title">
 		<li>ID</li>
-		<li>User ID</li>
+		<li>User ID / Name</li>
 		<li>RMA Number</li>
 		<li>Name</li>
 		<li>RMA Detail</li>
 		<li>Status</li>
 		<li>Submit Date</li>
 	</ul>
-
-	<?php foreach ($rma_result as $rma_key => $rma_value) { ?>
-	<ul>
-		<li><?=$rma_value->ID?></li>
-		<li><?=$rma_value->uid?></li>
-		<li><?=$rma_value->rma_num?></li>
-		<li><?=$rma_value->name?></li>
-		<li><?=$rma_value->desc_issue?></li>
-		<li><a href="<?php get_permalink() . "&id=" . $rma_value->ID; ?>"><?=$rma_value->status?></a>&nbsp;</li>
-		<li><?=$rma_value->submit_date?></li>
-	</ul>
-	<?php } ?>
 
 </div>

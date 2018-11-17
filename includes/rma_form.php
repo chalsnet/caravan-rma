@@ -4,6 +4,12 @@ $featured_image = get_the_post_thumbnail_url( get_the_ID(), 'thumbnail' );
 
 if ($_POST) {
 
+
+echo "<pre>";
+print_r($_POST);
+echo "</pre>";
+
+
 	$new_rma = str_split(substr(time(), 4), 3);
 	$rma_num = $new_rma[0] . "-" . $new_rma[1];
 	$uid = get_current_user_id();
@@ -57,8 +63,7 @@ if ($_POST) {
 
 <style type="text/css">
 	.rma_form {
-		width: 50em;
-		border: 1px solid;
+		width: 100%;
 	}
 	.rma_form ul li {
 		list-style: none;
